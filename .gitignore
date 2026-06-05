@@ -1,0 +1,7 @@
+# editor / OS cruft
+.DS_Store
+*.swp
+
+# python bytecode from running hooks/tests
+__pycache__/
+*.pyc
