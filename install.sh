@@ -2,26 +2,27 @@
 # Install dotagents into the global Claude config.
 #
 # Usage:
-#   ./install.sh                link components + merge global settings
+#   ./install.sh                copy components + merge global settings
 #   ./install.sh enable-hooks   turn on the opt-in lint hooks in the CURRENT project
 #
-# Idempotent: re-running relinks and re-merges without duplicating anything.
-# Existing real files/dirs at a target path are moved to a timestamped backup
-# under <claude-dir>/backups/ before being replaced with a symlink.
+# Idempotent: re-running re-copies and re-merges without duplicating anything.
+# A legacy symlink from an older install is dropped; an existing real file/dir
+# with different content is moved to a timestamped backup under
+# <claude-dir>/backups/ before being replaced with a fresh copy.
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC="$REPO_DIR/.claude"
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 
-# Components symlinked into the global config: the content dirs plus the global
-# house-style CLAUDE.md. Hook SCRIPTS are linked so they have a stable path, but
+# Components copied into the global config: the content dirs plus the global
+# house-style CLAUDE.md. Hook SCRIPTS are copied so they have a stable path, but
 # they are NOT activated globally - activate them per project via `enable-hooks`.
 COMPONENTS="skills commands agents hooks CLAUDE.md"
 
 log() { printf '%s\n' "$*"; }
 
-link_components() {
+copy_components() {
   mkdir -p "$CLAUDE_DIR"
   local backup_dir="" ts src dst name
   for name in $COMPONENTS; do
@@ -31,11 +32,14 @@ link_components() {
       log "skip $name (not in repo)"
       continue
     fi
-    if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
-      log "ok   $name (already linked)"
+    if [ -e "$dst" ] && [ ! -L "$dst" ] && diff -rq "$src" "$dst" >/dev/null 2>&1; then
+      log "ok   $name (already current)"
       continue
     fi
-    if [ -e "$dst" ] || [ -L "$dst" ]; then
+    if [ -L "$dst" ]; then
+      rm -f "$dst"  # legacy symlink from an older install - just drop it
+      log "drop legacy symlink $name"
+    elif [ -e "$dst" ]; then
       if [ -z "$backup_dir" ]; then
         ts="$(date +%Y%m%d-%H%M%S)"
         backup_dir="$CLAUDE_DIR/backups/dotagents-$ts"
@@ -44,8 +48,8 @@ link_components() {
       mv "$dst" "$backup_dir/"
       log "move existing $name -> $backup_dir/"
     fi
-    ln -sfn "$src" "$dst"
-    log "link $name -> $src"
+    cp -R "$src" "$dst"
+    log "copy $name -> $dst"
   done
   if [ -n "$backup_dir" ]; then
     log "backed up replaced entries to $backup_dir"
@@ -126,7 +130,7 @@ PY
 
 case "${1:-install}" in
   install)
-    link_components
+    copy_components
     merge_global_settings
     log "done"
     ;;

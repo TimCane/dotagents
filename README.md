@@ -1,7 +1,7 @@
 # dotagents
 
 My shared Claude Code configuration: skills, slash commands, subagents, and
-hooks I reuse across projects, plus a small house style. One repo, symlinked
+hooks I reuse across projects, plus a small house style. One repo, copied
 into the global `~/.claude` so it applies everywhere.
 
 ## What is in here
@@ -10,20 +10,23 @@ into the global `~/.claude` so it applies everywhere.
 .claude/
   CLAUDE.md      global house style (short, universal rules)
   skills/        on-demand capabilities and house-style specs
-  commands/      custom slash commands (/<name>)
-  agents/        custom subagents
   hooks/         PreToolUse lint scripts (python3)
 settings.global.json   house preferences merged into ~/.claude/settings.json
-install.sh             link components + merge settings; also `enable-hooks`
+install.sh             copy components + merge settings; also `enable-hooks`
 tests/                 bash tests for the hooks + a repo-wide ASCII self-lint
 ```
+
+The stack skills (`dotnet-style`, `react-style`, `astro-style`,
+`devcontainer-setup`) encode my conventions for the languages and tooling I use
+across projects, and ship thin scaffold templates (structural only - no pinned
+versions).
 
 ## Global vs opt-in
 
 - **Global (always available):** `skills/`, `commands/`, `agents/`, and the house
   `CLAUDE.md`. These are advisory or on-demand, so applying them everywhere is
   harmless.
-- **Opt-in per project:** the lint **hooks**. Their scripts are linked globally so
+- **Opt-in per project:** the lint **hooks**. Their scripts are copied globally so
   they have a stable path (`$HOME/.claude/hooks/...`), but they only *fire* in a
   project whose `.claude/settings.json` activates them. This keeps other people's
   repos (and ones that legitimately need unicode or different commit styles) free
@@ -39,10 +42,11 @@ cd dotagents
 
 `install.sh` is idempotent. It:
 
-- symlinks `skills/`, `commands/`, `agents/`, `hooks/`, and `CLAUDE.md` into
+- copies `skills/`, `commands/`, `agents/`, `hooks/`, and `CLAUDE.md` into
   `~/.claude` (override the location with `CLAUDE_CONFIG_DIR`);
-- backs up anything already at those paths to `~/.claude/backups/dotagents-<ts>/`
-  before replacing it;
+- drops any legacy symlink from an older install, and backs up real content
+  already at those paths to `~/.claude/backups/dotagents-<ts>/` before replacing
+  it;
 - merges `settings.global.json` into `~/.claude/settings.json` (preserving your
   existing keys such as `theme` and `enabledPlugins`).
 
@@ -55,7 +59,7 @@ From inside the project you want to lint:
 ```
 
 This merges the opt-in hook block into that project's `.claude/settings.json`,
-pointing at the globally linked scripts. Re-running is safe (it will not add
+pointing at the globally copied scripts. Re-running is safe (it will not add
 duplicates).
 
 ## Hooks

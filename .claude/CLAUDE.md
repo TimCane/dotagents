@@ -22,9 +22,42 @@ file, existing git history, .editorconfig) override these wherever they conflict
 
 See the `commit-style` and `pr-style` skills for the full spec and examples.
 
+## Stack
+
+Defaults for my own projects. A repo's existing setup overrides these.
+
+- Every project runs in a devcontainer; new repos get one. See the
+  `devcontainer-setup` skill.
+- Prefer pnpm over npm for JS/TS work.
+
 ## Writing
 
 - Terse and direct. Prefer bullets over paragraphs. Cut filler.
+
+## Authoring
+
+Comments and generated prose are written by ME, to another developer reading the
+code later - not by an assistant narrating to me.
+
+- Write in my voice, about the code: what it does and why. Do not narrate your
+  own work ("I've added", "now we wire up"), address me as an assistant would
+  ("you can drop more agents here"), or describe the edit ("no longer symlinks",
+  "changed to copy"). The diff carries the change story; the comment states the
+  current state.
+- User-facing instructions in docs are fine - a README saying "Run ./install.sh"
+  is the author addressing a user, not the AI addressing me.
+- Do not manufacture artifacts. No files, dirs, doc sections, or comments whose
+  only job is to explain, pad, or scaffold for hypothetical future use
+  (placeholder READMEs, "how to add more X" guides, speculative empty dirs -
+  .gitkeep included). If I would not add it unprompted, do not add it.
+
+Example:
+
+    # bad  - AI narrating the edit, addressed to me
+    # We no longer symlink; now we copy so your other tools don't break.
+
+    # good - my voice, current state, to a peer
+    # Copy rather than symlink: some tooling follows the link and breaks.
 
 ## ASCII
 
