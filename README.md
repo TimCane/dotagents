@@ -10,8 +10,6 @@ into the global `~/.claude` so it applies everywhere.
 .claude/
   CLAUDE.md      global house style (short, universal rules)
   skills/        on-demand capabilities and house-style specs
-  commands/      custom slash commands (/<name>)
-  agents/        custom subagents
   hooks/         PreToolUse lint scripts (python3)
 settings.global.json   house preferences merged into ~/.claude/settings.json
 install.sh             copy components + merge settings; also `enable-hooks`
