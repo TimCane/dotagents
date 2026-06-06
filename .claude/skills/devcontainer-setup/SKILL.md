@@ -1,11 +1,13 @@
 ---
 name: devcontainer-setup
-description: How I set up devcontainers for new projects. Consult BEFORE adding or editing a .devcontainer so it matches my two archetypes (Node/TS image, or .NET via docker-compose) and includes my claude-code-passthrough feature and the .claude mount. Ships both devcontainer.json templates and a post-create script.
+description: How I set up devcontainers for new projects. Consult BEFORE adding or editing a .devcontainer so it matches my two archetypes (Node/TS image, or .NET via docker-compose) and includes my claude-code-passthrough feature. Ships both devcontainer.json templates and a post-create script.
 ---
 
 # Devcontainer Setup
 
 Every project runs in a devcontainer. Pick the archetype that fits the stack.
+These are defaults for a fresh project; a repo with a working devcontainer of its
+own wins.
 
 ## Archetype A: Node / TypeScript (default for JS/TS sites and SPAs)
 

@@ -1,16 +1,20 @@
 ---
 name: react-style
-description: House conventions for my React + TypeScript frontends. Consult BEFORE scaffolding a React app or adding components, hooks, routes, data fetching, or tests, so the Vite-SPA default, strict TS, Tailwind, TanStack Query, and naming/import rules match my other repos (flag-quiz, dwello frontend, dashboards). Ships .prettierrc and a strict tsconfig template.
+description: House conventions for my React + TypeScript frontends. Consult BEFORE scaffolding a React app or adding components, hooks, routes, data fetching, or tests, so the Vite-SPA default, strict TS, Tailwind, TanStack Query, and naming/import rules stay consistent. Ships .prettierrc and a strict tsconfig template.
 ---
 
 # React Style
 
 TypeScript React frontend conventions.
 
+These are defaults for a fresh frontend. A repo that is already structured
+differently wins - apply these when scaffolding, do not restructure existing
+code to match them.
+
 ## Stack
 
 Default to a **Vite SPA**. Reach for **Next.js (App Router)** only when you
-actually need SSR / RSC / server routes (scout-bingo is the one Next repo).
+actually need SSR / RSC / server routes.
 
 - React + TypeScript **strict mode** + Vite
 - Tailwind CSS, with shadcn/ui for primitives and Lucide for icons
@@ -59,5 +63,5 @@ actually need SSR / RSC / server routes (scout-bingo is the one Next repo).
 - Prettier only (copy `.prettierrc`: single quotes, no semicolons, 2-space).
   Add ESLint per repo if wanted; Prettier is the baseline.
 
-`.gitignore`: copy `~/.claude/templates/gitignore` - it covers `dist/`,
-`node_modules/`, `.next/`.
+`.gitignore`: use the default the scaffolder emits (`pnpm create vite` /
+`create-next-app`) - it covers `dist/`, `node_modules/`, `.next/`.

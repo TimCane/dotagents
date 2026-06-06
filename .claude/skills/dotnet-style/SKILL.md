@@ -1,13 +1,16 @@
 ---
 name: dotnet-style
-description: House conventions for my ASP.NET Core / C# backends. Consult BEFORE creating a new .NET solution or adding projects, controllers, EF Core entities, services, or tests, so layering, the Options pattern, EF/Npgsql usage, and the xUnit+Moq / Testcontainers split match my other repos (bot-game, dwello, household-manager). Ships Directory.Build.props and .editorconfig templates and documents central package management.
+description: House conventions for my ASP.NET Core / C# backends. Consult BEFORE creating a new .NET solution or adding projects, controllers, EF Core entities, services, or tests, so layering, the Options pattern, EF/Npgsql usage, and the xUnit+Moq / Testcontainers split stay consistent. Ships Directory.Build.props and .editorconfig templates and documents central package management.
 ---
 
 # .NET Style
 
-ASP.NET Core backend conventions. The canonical shape across my repos: clean
-layering, Controllers, EF Core + Postgres + Redis, no hardcoded config, and a
-unit/integration test split.
+ASP.NET Core backend conventions: clean layering, Controllers, EF Core +
+Postgres + Redis, no hardcoded config, and a unit/integration test split.
+
+These are defaults for a fresh backend. A repo that is already structured
+differently wins - apply these when scaffolding, do not restructure existing
+code to match them.
 
 ## Solution layout
 
@@ -15,7 +18,7 @@ Clean / onion layering. Dependencies flow inward only.
 
 ```
 src/
-  <App>.Domain/          # entities, enums, interfaces. ZERO dependencies.
+  <App>.Domain/          # entities, enums, interfaces. No outward dependencies.
   <App>.Infrastructure/  # EF Core DbContext, migrations, services, jobs
   <App>.Api/             # controllers, DTOs, middleware, Program.cs
 tests/
@@ -28,8 +31,8 @@ never references EF Core or ASP.NET types.
 
 ## API surface
 
-- **Controllers**, attribute-routed, under `/api/`. Not Minimal APIs (the
-  default; bbrts is the deliberate exception).
+- **Controllers**, attribute-routed, under `/api/`. Minimal APIs only where a
+  repo has a clear reason to prefer them.
 - DTOs for every request/response - never expose entities directly.
 - RESTful, kebab-case routes. Version under `/api/v1/` when the surface is public.
 - Return typed results; validate input and fail with the right status
@@ -83,8 +86,8 @@ Use Central Package Management: add a `Directory.Packages.props` with
 each package version there once so `.csproj` files reference IDs only. Add the
 actual `PackageVersion` entries per solution - do not start from a curated list.
 
-`.gitignore`: copy `../../templates/gitignore` (or `~/.claude/templates/gitignore`
-once installed) - it already covers `bin/`, `obj/`, `*.dll`, `*.pdb`.
+`.gitignore`: use the .NET default (`dotnet new gitignore`) - it already covers
+`bin/`, `obj/`, `*.dll`, `*.pdb`.
 
 ## Naming
 

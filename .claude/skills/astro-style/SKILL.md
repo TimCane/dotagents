@@ -1,11 +1,15 @@
 ---
 name: astro-style
-description: House conventions for my Astro content/SSR sites. Consult BEFORE scaffolding an Astro project or adding pages, layouts, content collections, or styling, so the Astro 5 + strict TS + Tailwind/SCSS setup and the Coolify deploy model match my other sites (amandasemporium, house-cleaner, runnymedescouts). Ships .prettierrc and a tsconfig template.
+description: House conventions for my Astro content/SSR sites. Consult BEFORE scaffolding an Astro project or adding pages, layouts, content collections, or styling, so the Astro 5 + strict TS + Tailwind/SCSS setup and the Coolify deploy model stay consistent. Ships .prettierrc and a tsconfig template.
 ---
 
 # Astro Style
 
 Astro content and SSR site conventions.
+
+These are defaults for a fresh site. A repo that is already structured
+differently wins - apply these when scaffolding, do not restructure existing
+code to match them.
 
 ## Stack
 
@@ -16,7 +20,7 @@ Astro content and SSR site conventions.
   don't mix. Self-host fonts via `@fontsource`.
 - pnpm.
 - Deploy on Coolify - Nixpacks auto-detect (reads `package.json` build/start) for
-  simple sites, or multi-stage Docker for SSR. See `deploy-coolify-docker`.
+  simple sites, or multi-stage Docker for SSR.
 
 ## Structure
 
@@ -51,4 +55,5 @@ docs/         # specs (source of truth)
   dashboard. Add Docker only when the site needs SSR control Nixpacks can't give.
 
 `tsconfig.json`: copy the template (extends `astro/tsconfigs/strict`, adds `@/*`).
-`.gitignore`: copy `~/.claude/templates/gitignore` - covers `dist/`, `.astro/`.
+`.gitignore`: use the default `pnpm create astro` emits - it covers `dist/`,
+`.astro/`.
