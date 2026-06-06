@@ -18,7 +18,7 @@ CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 # Components copied into the global config: the content dirs plus the global
 # house-style CLAUDE.md. Hook SCRIPTS are copied so they have a stable path, but
 # they are NOT activated globally - activate them per project via `enable-hooks`.
-COMPONENTS="skills commands agents hooks templates CLAUDE.md"
+COMPONENTS="skills commands agents hooks CLAUDE.md"
 
 log() { printf '%s\n' "$*"; }
 
@@ -100,7 +100,6 @@ if os.path.exists(target_path):
 wanted = [
     ("Bash", 'python3 "$HOME/.claude/hooks/git-message-lint.py"'),
     ("Write|Edit|MultiEdit", 'python3 "$HOME/.claude/hooks/ascii-only-lint.py"'),
-    ("Write|Edit|MultiEdit", 'python3 "$HOME/.claude/hooks/build-artifact-guard.py"'),
 ]
 
 pre = settings.setdefault("hooks", {}).setdefault("PreToolUse", [])

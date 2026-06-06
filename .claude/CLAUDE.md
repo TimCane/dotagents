@@ -28,16 +28,7 @@ Defaults for my own projects. A repo's existing setup overrides these.
 
 - Every project runs in a devcontainer; new repos get one. See the
   `devcontainer-setup` skill.
-- `docs/` is the source of truth for any non-trivial project: specs live there,
-  read the relevant doc before implementing, and keep code and docs in sync. See
-  the `project-workflow` skill.
-- Never commit build artifacts or dependencies (`bin/`, `obj/`, `dist/`,
-  `.next/`, `node_modules/`, `*.dll`, `*.pdb`). New repos get the standard
-  `.gitignore`; the `build-artifact-guard` hook enforces this where enabled.
 - Prefer pnpm over npm for JS/TS work.
-- Stack conventions live in the `dotnet-style`, `react-style`, and `astro-style`
-  skills; CI and deployment in `deploy-coolify-docker`. Consult the matching
-  skill when working in that stack.
 
 ## Writing
 
