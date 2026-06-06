@@ -1,0 +1,22 @@
+{
+  "name": "C# (.NET) and PostgreSQL",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [5000, 5432, 6379],
+  "features": {
+    "ghcr.io/timcane/devcontainer-features/claude-code-passthrough:latest": {},
+    "ghcr.io/42atomys/devcontainers-features/redis-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-ossdata.vscode-pgsql"
+      ]
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh"
+}

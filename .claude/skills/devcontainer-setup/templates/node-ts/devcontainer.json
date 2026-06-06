@@ -1,0 +1,15 @@
+{
+  "name": "Node.js & TypeScript",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "runArgs": ["--net=host"],
+  "features": {
+    "ghcr.io/timcane/devcontainer-features/claude-code-passthrough:latest": {}
+  },
+  "forwardPorts": [],
+  "postCreateCommand": "pnpm install",
+  "customizations": {
+    "vscode": {
+      "extensions": ["bradlc.vscode-tailwindcss", "esbenp.prettier-vscode"]
+    }
+  }
+}

@@ -11,10 +11,16 @@ into the global `~/.claude` so it applies everywhere.
   CLAUDE.md      global house style (short, universal rules)
   skills/        on-demand capabilities and house-style specs
   hooks/         PreToolUse lint scripts (python3)
+  templates/     shared scaffold files (standard .gitignore, CLAUDE.md skeleton)
 settings.global.json   house preferences merged into ~/.claude/settings.json
 install.sh             copy components + merge settings; also `enable-hooks`
 tests/                 bash tests for the hooks + a repo-wide ASCII self-lint
 ```
+
+The stack skills (`dotnet-style`, `react-style`, `astro-style`,
+`devcontainer-setup`, `deploy-coolify-docker`, `project-workflow`) encode my
+conventions for the languages and tooling I use across projects, and ship thin
+scaffold templates (structural only - no pinned versions).
 
 ## Global vs opt-in
 
@@ -65,6 +71,9 @@ duplicates).
   break the house style (non-Conventional subject, over 72 chars, prose-paragraph
   bodies, AI attribution footer). Pairs with the `commit-style` and `pr-style`
   skills.
+- `build-artifact-guard.py` - blocks Write/Edit to build output and dependency
+  paths (`bin/`, `obj/`, `dist/`, `.next/`, `node_modules/`, `*.dll`, `*.pdb`).
+  Pairs with the standard `.gitignore` template.
 
 ## House style
 
